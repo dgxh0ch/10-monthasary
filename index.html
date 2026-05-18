@@ -1,0 +1,1491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Our Adventures 💛</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --gold:        #C9A84C;
+  --gold-light:  #F0D080;
+  --gold-pale:   #FDF6E3;
+  --gold-dark:   #7D6220;
+  --emerald:     #1A6B4A;
+  --emerald-mid: #2D9E6B;
+  --emerald-pale:#D6F0E6;
+  --cream:       #FDFAF3;
+  --dark:        #1A1A12;
+  --mid:         #4A4535;
+  --muted:       #7A7260;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--cream);
+  font-family: 'Nunito', sans-serif;
+  color: var(--dark);
+  overflow-x: hidden;
+}
+
+/* ── LOCK SCREEN OVERLAY ── */
+#lock-screen {
+  position: fixed;
+  inset: 0;
+  background: var(--cream);
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+
+#lock-screen::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(ellipse at 20% 20%, rgba(201,168,76,0.06) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 80%, rgba(26,107,74,0.06) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.lock-box {
+  position: relative;
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+  background: white;
+  border: 1.5px solid rgba(201,168,76,0.3);
+  padding: 40px 32px;
+  border-radius: 24px;
+  box-shadow: 0 10px 40px rgba(201,168,76,0.12);
+}
+
+.lock-greeting {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  font-style: italic;
+  color: var(--dark);
+  margin-bottom: 8px;
+}
+
+.lock-sub {
+  font-size: 14px;
+  color: var(--muted);
+  font-weight: 600;
+  margin-bottom: 24px;
+}
+
+.lock-input-wrapper {
+  position: relative;
+  margin-bottom: 16px;
+}
+
+.lock-input {
+  width: 100%;
+  padding: 14px 20px;
+  border: 1.5px solid rgba(201,168,76,0.4);
+  border-radius: 999px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  text-align: center;
+  outline: none;
+  background: var(--cream);
+  color: var(--dark);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.lock-input:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(201,168,76,0.15);
+}
+
+.lock-btn {
+  width: 100%;
+  padding: 14px 20px;
+  background: var(--emerald);
+  color: white;
+  border: none;
+  border-radius: 999px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 14px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+}
+
+.lock-btn:hover {
+  background: var(--emerald-mid);
+}
+
+.lock-btn:active {
+  transform: scale(0.98);
+}
+
+.lock-error {
+  font-size: 13px;
+  color: #C2410C;
+  font-weight: 700;
+  margin-top: 12px;
+  display: none;
+}
+
+/* ── ORNAMENTAL BG ── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    radial-gradient(ellipse at 20% 20%, rgba(201,168,76,0.08) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 80%, rgba(26,107,74,0.08) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── NAV ── */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(253,250,243,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1.5px solid rgba(201,168,76,0.3);
+  padding: 14px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+nav .brand {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  color: var(--gold-dark);
+  letter-spacing: 0.5px;
+}
+
+nav .links {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+nav a {
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--muted);
+  padding: 5px 12px;
+  border-radius: 999px;
+  border: 1.5px solid transparent;
+  transition: all 0.2s;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+nav a:hover {
+  background: var(--gold-pale);
+  border-color: var(--gold);
+  color: var(--gold-dark);
+}
+
+/* ── HERO ── */
+.hero {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: 90px 24px 70px;
+  overflow: hidden;
+}
+
+.hero-deco {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.hero-deco svg {
+  position: absolute;
+}
+
+/* Star Configurations & Layout */
+.hero-deco svg:nth-child(1) { top: 20px; left: 4%; width: 160px; height: auto; }
+.hero-deco svg:nth-child(2) { top: 20px; right: 4%; width: 160px; height: auto; transform: scaleX(-1); }
+
+/* Twinkle Animations for a whimsical feel */
+.star-gold { fill: var(--gold); animation: twinkle 3s infinite ease-in-out; opacity: 0.75; }
+.star-emerald { fill: var(--emerald); animation: twinkle 4s infinite ease-in-out; opacity: 0.65; }
+.star-fast { animation-delay: 0.5s; animation-duration: 2s; }
+.star-slow { animation-delay: 1.2s; animation-duration: 5s; }
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.2; transform: scale(0.8); transform-origin: center; }
+  50% { opacity: 0.85; transform: scale(1.1); transform-origin: center; }
+}
+
+.hero-eyebrow {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--emerald);
+  border: 1.5px solid var(--emerald-mid);
+  background: var(--emerald-pale);
+  padding: 5px 18px;
+  border-radius: 999px;
+  margin-bottom: 24px;
+  animation: fadeUp 0.5s ease both;
+}
+
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(3rem, 9vw, 7rem);
+  line-height: 1.0;
+  color: var(--dark);
+  animation: fadeUp 0.5s 0.1s ease both;
+}
+
+.hero h1 em {
+  font-style: italic;
+  color: var(--gold);
+  position: relative;
+}
+
+.hero h1 em::after {
+  content: '';
+  position: absolute;
+  bottom: 6px;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, var(--gold), var(--gold-light));
+  border-radius: 2px;
+  animation: growLine 0.6s 0.7s ease both;
+  transform-origin: left;
+}
+
+.hero-names {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--muted);
+  margin-top: 20px;
+  animation: fadeUp 0.5s 0.2s ease both;
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  letter-spacing: 1px;
+}
+
+.divider-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin: 24px 0;
+  animation: fadeUp 0.5s 0.3s ease both;
+}
+
+.divider-row .gem { font-size: 1.1rem; }
+.divider-row .line {
+  width: 60px;
+  height: 1.5px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+
+.stat-row {
+  display: inline-flex;
+  gap: 0;
+  margin-top: 10px;
+  border: 2px solid var(--gold);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 24px rgba(201,168,76,0.15);
+  animation: fadeUp 0.5s 0.4s ease both;
+}
+
+.stat-row {
+  display: inline-flex;
+  gap: 0;
+  margin-top: 10px;
+  border: 2px solid var(--gold);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 24px rgba(201,168,76,0.15);
+  animation: fadeUp 0.5s 0.4s ease both;
+}
+
+.stat-cell {
+  padding: 16px 24px;
+  text-align: center;
+}
+
+.stat-cell:not(:last-child) {
+  border-right: 1.5px solid rgba(201,168,76,0.4);
+}
+
+.stat-cell .n {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.2rem;
+  color: var(--gold-dark);
+  display: block;
+  line-height: 1;
+}
+
+.stat-cell .l {
+  font-size: 11px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--muted);
+  margin-top: 6px;
+  display: block;
+}
+
+/* ── SECTION HEADER ── */
+.sec-header {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: 64px 24px 8px;
+}
+
+.sec-header h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.8rem, 5vw, 3rem);
+  color: var(--dark);
+}
+
+.sec-header h2 em {
+  font-style: italic;
+  color: var(--emerald);
+}
+
+.sec-header p {
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 600;
+  margin-top: 8px;
+  letter-spacing: 0.5px;
+}
+
+.ornament {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.ornament .dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--gold);
+}
+
+.ornament .line {
+  width: 50px; height: 1px;
+  background: var(--gold);
+}
+
+/* ── DATE CARDS ── */
+.dates-grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 28px;
+  max-width: 1100px;
+  margin: 40px auto 0;
+  padding: 0 24px 20px;
+}
+
+.date-card {
+  background: white;
+  border: 1.5px solid rgba(201,168,76,0.35);
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(201,168,76,0.1), 0 1px 3px rgba(0,0,0,0.04);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  animation: fadeUp 0.5s ease both;
+}
+
+.date-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 36px rgba(201,168,76,0.2), 0 2px 6px rgba(0,0,0,0.06);
+}
+
+/* ── CARD GALLERY ── */
+.card-gallery {
+  position: relative;
+  border-bottom: 1.5px solid rgba(201,168,76,0.2);
+}
+
+.card-main-photo {
+  position: relative;
+  height: 210px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.card-main-photo img {
+  position: absolute;
+  inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+.date-card:hover .card-main-photo img { transform: scale(1.04); }
+
+.card-num {
+  position: absolute;
+  top: 10px; left: 10px;
+  background: white;
+  border: 1.5px solid var(--accent);
+  border-radius: 999px;
+  width: 28px; height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  font-size: 12px;
+  z-index: 4;
+  pointer-events: none;
+}
+
+/* Photo count badge */
+.photo-count-badge {
+  position: absolute;
+  bottom: 8px; right: 8px;
+  background: rgba(0,0,0,0.55);
+  color: white;
+  font-size: 10px;
+  font-weight: 800;
+  padding: 3px 8px;
+  border-radius: 999px;
+  letter-spacing: 0.5px;
+  z-index: 4;
+  pointer-events: none;
+}
+
+/* Thumbnail strip */
+.card-thumbs {
+  display: flex;
+  gap: 6px;
+  padding: 8px 10px;
+  overflow-x: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--gold) transparent;
+  min-height: 66px;
+  align-items: center;
+}
+
+.thumb {
+  flex: 0 0 54px;
+  height: 54px;
+  border-radius: 7px;
+  overflow: hidden;
+  border: 1.5px solid transparent;
+  cursor: pointer;
+  transition: border-color 0.15s, transform 0.15s;
+  position: relative;
+}
+
+.thumb img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.thumb:hover { border-color: var(--gold); transform: scale(1.06); }
+.thumb.active { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent-pale); }
+
+.card-body {
+  padding: 18px 20px 22px;
+}
+
+.card-tag {
+  font-size: 10px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.card-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 4px;
+  color: var(--dark);
+  line-height: 1.3;
+}
+
+.card-date-text {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--muted);
+  margin-bottom: 10px;
+  letter-spacing: 0.5px;
+}
+
+.card-memo {
+  font-size: 13.5px;
+  color: var(--mid);
+  line-height: 1.65;
+  max-height: 180px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+/* ── CERTIFICATE ── */
+#certificate {
+  position: relative;
+  z-index: 1;
+  max-width: 820px;
+  margin: 60px auto;
+  padding: 0 24px;
+}
+
+.cert-outer {
+  background: white;
+  border: 3px solid var(--gold);
+  border-radius: 6px;
+  padding: 6px;
+  box-shadow: 0 8px 40px rgba(201,168,76,0.18), 0 2px 8px rgba(0,0,0,0.06);
+}
+
+.cert-inner {
+  border: 1.5px solid rgba(201,168,76,0.4);
+  border-radius: 3px;
+  padding: 50px 48px;
+  text-align: center;
+  background: var(--gold-pale);
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.cert-inner::before, .cert-inner::after {
+  content: '✦';
+  position: absolute;
+  font-size: 4rem;
+  color: rgba(201,168,76,0.12);
+}
+
+.cert-inner::before { top: -10px; left: 10px; }
+.cert-inner::after { bottom: -10px; right: 10px; }
+
+.cert-eyebrow {
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--gold-dark);
+  margin-bottom: 8px;
+}
+
+.cert-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.6rem, 4vw, 2.6rem);
+  font-style: italic;
+  color: var(--gold-dark);
+  margin-bottom: 24px;
+  line-height: 1.2;
+}
+
+.cert-body {
+  font-size: 15px;
+  color: var(--mid);
+  line-height: 1.8;
+  max-width: 520px;
+  margin: 0 auto;
+  font-weight: 600;
+}
+
+.cert-names {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  font-style: italic;
+  color: var(--emerald);
+  margin: 20px 0;
+  line-height: 1.3;
+}
+
+.cert-seal {
+  margin: 28px auto 8px;
+  width: 72px; height: 72px;
+  border-radius: 50%;
+  background: var(--gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  border: 3px solid var(--gold-dark);
+  box-shadow: 0 0 0 4px rgba(201,168,76,0.2);
+}
+
+.cert-footer {
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gold-dark);
+  margin-top: 28px;
+  font-weight: 700;
+}
+
+.cert-photo-zone {
+  margin-top: 28px;
+  position: relative;
+  width: 100%;
+  aspect-ratio: 7 / 5;
+  border: 1.5px solid rgba(201,168,76,0.3);
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.cert-photo-zone img {
+  width: 100%; height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+/* ── VIDEO CALL GALLERY ── */
+#videocalls {
+  position: relative;
+  z-index: 1;
+}
+
+.vcall-grid {
+  max-width: 1000px;
+  margin: 32px auto 0;
+  padding: 0 24px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.vcall-item {
+  background: white;
+  border-radius: 14px;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  box-shadow: 0 3px 14px rgba(201,168,76,0.08), 0 1px 2px rgba(0,0,0,0.03);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  border: 1.5px solid rgba(201,168,76,0.3);
+  display: flex;
+  flex-direction: column;
+}
+
+.vcall-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(201,168,76,0.16), 0 2px 4px rgba(0,0,0,0.04);
+}
+
+.vcall-item:not(.highlighted-call) .vcall-img-container {
+  aspect-ratio: 3 / 4;
+}
+
+.vcall-item.highlighted-call {
+  grid-column: span 2;
+  border: 2px solid var(--gold);
+  box-shadow: 0 5px 18px rgba(201,168,76,0.2);
+}
+
+.vcall-item.highlighted-call .vcall-img-container {
+  aspect-ratio: 16 / 10;
+}
+
+.vcall-item.highlighted-call .vcall-dot {
+  background: var(--gold);
+  box-shadow: 0 0 0 3px rgba(201,168,76,0.3);
+}
+
+.vcall-img-container {
+  position: relative;
+  width: 100%;
+  background: var(--dark);
+  overflow: hidden;
+}
+
+.vcall-item img {
+  position: absolute;
+  inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  opacity: 0.95;
+  transition: transform 0.4s ease;
+}
+
+.vcall-item:hover img {
+  transform: scale(1.03);
+}
+
+.vcall-text-area {
+  padding: 12px 14px 16px;
+  background: white;
+  flex-grow: 1;
+}
+
+.vcall-item .vcall-label {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--dark);
+  margin-bottom: 4px;
+  letter-spacing: 0.1px;
+}
+
+.vcall-item .vcall-description {
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--mid);
+}
+
+.vcall-item .vcall-dot {
+  position: absolute;
+  top: 10px; left: 10px;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--emerald-mid);
+  box-shadow: 0 0 0 3px rgba(45,158,107,0.25);
+  z-index: 3;
+}
+
+/* ── PHOTO STRIP ── */
+#moments {
+  position: relative;
+  z-index: 1;
+  background: var(--dark);
+  padding: 52px 0 48px;
+  margin: 60px 0 0;
+}
+
+#moments .sec-header { padding-top: 0; }
+#moments .sec-header h2 { color: var(--gold-light); }
+#moments .sec-header h2 em { color: var(--emerald-mid); }
+#moments .sec-header p { color: rgba(255,255,255,0.45); }
+#moments .ornament .line { background: var(--gold); opacity: 0.5; }
+#moments .ornament .dot { background: var(--gold); }
+
+.photo-strip {
+  display: flex;
+  gap: 16px;
+  padding: 32px 32px 8px;
+  overflow-x: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--gold-dark) var(--dark);
+}
+
+.strip-item {
+  flex: 0 0 190px;
+  height: 240px;
+  border: 2px solid rgba(201,168,76,0.3);
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+  background: #25221A;
+  cursor: pointer;
+  transition: transform 0.25s, border-color 0.25s;
+}
+
+.strip-item:nth-child(odd)  { transform: rotate(-1.8deg); }
+.strip-item:nth-child(even) { transform: rotate(1.8deg); }
+.strip-item:hover { transform: rotate(0deg) scale(1.05); border-color: var(--gold); }
+
+.strip-item img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; }
+
+/* ── SPOTIFY ── */
+#playlist {
+  position: relative;
+  z-index: 1;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 60px 24px 0;
+  text-align: center;
+}
+
+.spotify-box {
+  background: white;
+  border: 1.5px solid rgba(201,168,76,0.3);
+  border-radius: 18px;
+  padding: 32px;
+  box-shadow: 0 4px 24px rgba(201,168,76,0.1);
+  margin-top: 28px;
+}
+
+.spotify-box iframe {
+  border-radius: 12px;
+  border: none;
+  width: 100%;
+  display: block;
+}
+
+/* ── LOVE NOTE ── */
+#note {
+  position: relative;
+  z-index: 1;
+  max-width: 660px;
+  margin: 60px auto 0;
+  padding: 0 24px;
+  text-align: center;
+}
+
+.note-card {
+  background: white;
+  border: 1.5px solid rgba(201,168,76,0.3);
+  border-radius: 20px;
+  padding: 48px 42px;
+  box-shadow: 0 8px 40px rgba(201,168,76,0.12);
+  position: relative;
+}
+
+.note-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--gold), var(--emerald), var(--gold));
+  border-radius: 20px 20px 0 0;
+}
+
+.note-eyebrow {
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold-dark);
+  margin-bottom: 14px;
+}
+
+.note-card h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  font-style: italic;
+  color: var(--dark);
+  margin-bottom: 20px;
+}
+
+.note-card p {
+  font-size: 15px;
+  line-height: 1.85;
+  color: var(--mid);
+  font-weight: 600;
+}
+
+/* ── FOOTER ── */
+footer {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: 56px 24px 40px;
+  margin-top: 60px;
+  border-top: 1px solid rgba(201,168,76,0.2);
+}
+
+.footer-mark {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem;
+  font-style: italic;
+  color: var(--gold-dark);
+  margin-bottom: 10px;
+}
+
+footer p {
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+/* ── LIGHTBOX ── */
+.lightbox {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(10,8,6,0.92);
+  z-index: 999;
+  align-items: center;
+  justify-content: center;
+}
+
+.lightbox.open { display: flex; }
+
+.lightbox img {
+  max-width: 82vw;
+  max-height: 84vh;
+  border-radius: 10px;
+  border: 2px solid rgba(201,168,76,0.4);
+  box-shadow: 0 0 80px rgba(0,0,0,0.6);
+  object-fit: contain;
+}
+
+.lightbox-close {
+  position: absolute;
+  top: 20px; right: 28px;
+  font-size: 1.8rem;
+  color: rgba(255,255,255,0.6);
+  cursor: pointer;
+  font-weight: 300;
+  line-height: 1;
+  transition: color 0.2s;
+  z-index: 2;
+}
+
+.lightbox-close:hover { color: var(--gold-light); }
+
+.lightbox-prev, .lightbox-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 3rem;
+  color: rgba(255,255,255,0.5);
+  cursor: pointer;
+  padding: 12px 18px;
+  line-height: 1;
+  transition: color 0.2s;
+  user-select: none;
+  z-index: 2;
+}
+
+.lightbox-prev { left: 16px; }
+.lightbox-next { right: 16px; }
+.lightbox-prev:hover, .lightbox-next:hover { color: var(--gold-light); }
+
+.lightbox-counter {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 12px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.45);
+  letter-spacing: 1px;
+}
+
+/* ── RESPONSIVE RESPONSIVENESS AND MEDIA QUERIES ── */
+@media (max-width: 850px) {
+  .vcall-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .vcall-item.highlighted-call {
+    grid-column: span 2;
+  }
+}
+
+@media (max-width: 768px) {
+  nav {
+    padding: 12px 20px;
+    justify-content: center;
+  }
+  .stat-row {
+    display: flex;
+    flex-wrap: wrap;
+    border-radius: 12px;
+    justify-content: center;
+  }
+  .stat-cell {
+    flex: 1 0 30%;
+    padding: 12px 16px;
+  }
+  .cert-inner {
+    padding: 32px 24px;
+  }
+  .note-card {
+    padding: 36px 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  nav .links {
+    display: none;
+  }
+  .vcall-grid {
+    grid-template-columns: 1fr;
+  }
+  .vcall-item.highlighted-call {
+    grid-column: span 1;
+  }
+  .stat-cell {
+    flex: 1 0 100%;
+  }
+  .stat-cell:not(:last-child) {
+    border-right: none;
+    border-bottom: 1.5px solid rgba(201,168,76,0.4);
+  }
+}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes growLine {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+</style>
+</head>
+<body>
+
+<div id="lock-screen">
+  <div class="lock-box">
+    <div class="lock-greeting" id="time-greeting">Hello, Beautiful</div>
+    <div class="lock-sub">Welcome to our little corner of the internet.</div>
+    <div class="lock-input-wrapper">
+      <input type="password" id="password-input" class="lock-input" placeholder="Enter password (Hint: __-07-2025 😉)" onkeydown="if(event.key === 'Enter') checkPassword()">
+    </div>
+    <button class="lock-btn" onclick="checkPassword()">Unlock</button>
+    <div class="lock-error" id="lock-error-msg">Incorrect password, please try again lovie! 💛</div>
+  </div>
+</div>
+
+<nav>
+  <span class="brand">Our Adventures ✦</span>
+  <div class="links">
+    <a href="#dates">Dates</a>
+    <a href="#certificate">Certificate</a>
+    <a href="#videocalls">Calls</a>
+    <a href="#moments">Moments</a>
+    <a href="#playlist">Playlist</a>
+    <a href="#note">Note</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-deco">
+    <svg viewBox="0 0 150 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path class="star-gold" d="M40 90 L44 105 L59 109 L44 113 L40 128 L36 113 L21 109 L36 105 Z"/>
+      <path class="star-gold" d="M40 90 L42 102 L52 109 L42 116 L40 128 L38 116 L28 109 L38 102 Z" opacity="0.5"/>
+      <path class="star-emerald star-fast" d="M85 45 L88 55 L98 58 L88 61 L85 71 L82 61 L72 58 L82 55 Z"/>
+      <path class="star-gold star-slow" d="M30 190 L32 197 L39 199 L32 201 L30 208 L28 201 L21 199 L28 197 Z"/>
+      <path class="star-emerald" d="M95 150 L96 202 L102 204 L96 206 L95 212 L94 206 L88 204 L94 202 Z"/>
+      <circle cx="65" cy="115" r="2" class="star-gold star-slow"/>
+      <circle cx="50" cy="50" r="1.5" class="star-emerald"/>
+      <circle cx="75" cy="180" r="2" class="star-gold star-fast"/>
+    </svg>
+    <svg viewBox="0 0 150 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path class="star-gold star-slow" d="M40 90 L44 105 L59 109 L44 113 L40 128 L36 113 L21 109 L36 105 Z"/>
+      <path class="star-gold star-slow" d="M40 90 L42 102 L52 109 L42 116 L40 128 L38 116 L28 109 L38 102 Z" opacity="0.5"/>
+      <path class="star-emerald" d="M85 45 L88 55 L98 58 L88 61 L85 71 L82 61 L72 58 L82 55 Z"/>
+      <path class="star-gold star-fast" d="M30 190 L32 197 L39 199 L32 201 L30 208 L28 201 L21 199 L28 197 Z"/>
+      <path class="star-emerald star-slow" d="M95 150 L96 202 L102 204 L96 206 L95 212 L94 206 L88 204 L84 202 Z"/>
+      <circle cx="65" cy="115" r="2" class="star-gold"/>
+      <circle cx="50" cy="50" r="1.5" class="star-emerald star-fast"/>
+      <circle cx="75" cy="180" r="2" class="star-gold star-slow"/>
+    </svg>
+  </div>
+
+  <div class="hero-eyebrow">✦ 10 Monthasary (TEN FREAKING MONTHS I KNOW RIGHT) ✦</div>
+  <h1>Our Little <em>Shenanigans</em></h1>
+  <div class="hero-names">Nakshatraa x Lalit</div>
+
+  <div class="divider-row">
+    <div class="line"></div>
+    <span class="gem">💛</span>
+    <div class="line"></div>
+  </div>
+
+  <div class="stat-row">
+    <div class="stat-cell"><span class="n">10</span><span class="l">Months</span></div>
+    <div class="stat-cell"><span class="n">9</span><span class="l">Dates</span></div>
+    <div class="stat-cell"><span class="n" id="days-count">—</span><span class="l">Days</span></div>
+  </div>
+</section>
+
+<div id="dates" class="sec-header">
+  <h2>The <em>Dates</em></h2>
+  <p>Every meeting (yes very professional and business meeting), big and small</p>
+  <div class="ornament"><div class="line"></div><div class="dot"></div><div class="line"></div></div>
+</div>
+
+<div class="dates-grid"></div>
+
+<div id="certificate" class="sec-header">
+  <h2>Our <em>Certificate</em></h2>
+  <p>The most official document in the world</p>
+  <div class="ornament"><div class="line"></div><div class="dot"></div><div class="line"></div></div>
+</div>
+
+<section style="position:relative;z-index:1;max-width:820px;margin:32px auto;padding:0 24px;">
+  <div class="cert-outer">
+    <div class="cert-inner">
+      <div class="cert-eyebrow">✦ Officially Official ✦</div>
+      <div class="cert-title">Certificate of Fake Marriage</div>
+      <div class="cert-body">
+        This is to certify that, on this very special occasion,<br>the following two ridiculous people have decided to
+      </div>
+      <div class="cert-names">Nakshatraa & Lalit</div>
+      <div class="cert-body">
+        hereby pledge to always share snacks, laugh at their own jokes, and make the other person's day a little brighter for as long as they shall both find each other absolutely wonderful.
+      </div>
+      <div class="cert-seal">💍</div>
+      <div class="cert-footer">✦ Witnessed by Love & Terrible Decisions ✦</div>
+
+      <div class="cert-photo-zone">
+        <img src="certificate.jpg" alt="Official Certificate Photo" onclick="openLightboxGallery(null, this.src)">
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="videocalls" class="sec-header">
+  <h2>The <em>Calls</em></h2>
+  <p>When screens had to do — the FaceTime hall of fame</p>
+  <div class="ornament"><div class="line"></div><div class="dot"></div><div class="line"></div></div>
+</div>
+
+<div class="vcall-grid">
+  <div class="vcall-item">
+    <div class="vcall-dot"></div>
+    <div class="vcall-img-container">
+      <img src="Call1.jpg" alt="FaceTime Snapshot" onclick="openLightboxGallery(null, this.src)">
+    </div>
+    <div class="vcall-text-area">
+      <div class="vcall-label">Call #1</div>
+      <div class="vcall-description">I love how our call always made you smile no matter what</div>
+    </div>
+  </div>
+
+  <div class="vcall-item highlighted-call">
+    <div class="vcall-dot"></div>
+    <div class="vcall-img-container">
+      <img src="Call3.jpg" alt="FaceTime Snapshot" onclick="openLightboxGallery(null, this.src)">
+    </div>
+    <div class="vcall-text-area">
+      <div class="vcall-label">Call #3 — Featured Memory</div>
+      <div class="vcall-description">You and I. Always for ever. Even if we're physically apart. We are never really apart.</div>
+    </div>
+  </div>
+
+  <div class="vcall-item">
+    <div class="vcall-dot"></div>
+    <div class="vcall-img-container">
+      <img src="Call2.jpg" alt="FaceTime Snapshot" onclick="openLightboxGallery(null, this.src)">
+    </div>
+    <div class="vcall-text-area">
+      <div class="vcall-label">Call #2</div>
+      <div class="vcall-description">I DID NOT GIVE PERMISSION TO TAKE THIS</div>
+    </div>
+  </div>
+
+  <div class="vcall-item">
+    <div class="vcall-dot"></div>
+    <div class="vcall-img-container">
+      <img src="Call5.jpg" alt="FaceTime Snapshot" onclick="openLightboxGallery(null, this.src)">
+    </div>
+    <div class="vcall-text-area">
+      <div class="vcall-label">Call #5</div>
+      <div class="vcall-description">I loved falling asleep on call with you Naku</div>
+    </div>
+  </div>
+
+  <div class="vcall-item highlighted-call">
+    <div class="vcall-dot"></div>
+    <div class="vcall-img-container">
+      <img src="Call4.jpg" alt="FaceTime Snapshot" onclick="openLightboxGallery(null, this.src)">
+    </div>
+    <div class="vcall-text-area">
+      <div class="vcall-label">Call #4 — Highlighted Adventure</div>
+      <div class="vcall-description">YOU DO SNORE A TEENY BIT BTW MISSY. And I absolutely don't hate it at all</div>
+    </div>
+  </div>
+
+  <div class="vcall-item">
+    <div class="vcall-dot"></div>
+    <div class="vcall-img-container">
+      <img src="Call6.jpg" alt="FaceTime Snapshot" onclick="openLightboxGallery(null, this.src)">
+    </div>
+    <div class="vcall-text-area">
+      <div class="vcall-label">Call #6</div>
+      <div class="vcall-description">It's the most safe and at peace I've ever seen you.</div>
+    </div>
+  </div>
+</div>
+
+<section id="moments">
+  <div class="sec-header">
+    <h2>Extra <em>Moments</em></h2>
+    <p>The ones that didn't fit anywhere else but had to stay</p>
+    <div class="ornament"><div class="line"></div><div class="dot"></div><div class="line"></div></div>
+  </div>
+  <div class="photo-strip">
+    <div class="strip-item"><img src="Moment1.jpg" alt="Extra Moment" onclick="openLightboxGallery(null, this.src)"></div>
+    <div class="strip-item"><img src="Moment2.jpg" alt="Extra Moment" onclick="openLightboxGallery(null, this.src)"></div>
+    <div class="strip-item"><img src="Moment3.jpg" alt="Extra Moment" onclick="openLightboxGallery(null, this.src)"></div>
+    <div class="strip-item"><img src="Moment4.jpg" alt="Extra Moment" onclick="openLightboxGallery(null, this.src)"></div>
+    <div class="strip-item"><img src="Moment5.jpg" alt="Extra Moment" onclick="openLightboxGallery(null, this.src)"></div>
+    <div class="strip-item"><img src="Moment6.jpg" alt="Extra Moment" onclick="openLightboxGallery(null, this.src)"></div>
+    <div class="strip-item"><img src="Moment7.jpg" alt="Extra Moment" onclick="openLightboxGallery(null, this.src)"></div>
+    <div class="strip-item"><img src="Moment8.jpg" alt="Extra Moment" onclick="openLightboxGallery(null, this.src)"></div>
+  </div>
+</section>
+
+<section id="playlist">
+  <div class="sec-header" style="padding-top:0;">
+    <h2>Our <em>Playlist</em></h2>
+    <p>The soundtrack to us (would totally use a thumbail but ykkk)</p>
+    <div class="ornament"><div class="line"></div><div class="dot"></div><div class="line"></div></div>
+  </div>
+
+  <div class="spotify-box">
+    <div id="spotify-embed">
+      <iframe src="https://open.spotify.com/embed/playlist/0R1kc2WL6GTuy4pFA10RVx?utm_source=generator" height="380" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+    </div>
+  </div>
+</section>
+
+<section id="note">
+  <div class="sec-header" style="padding-top:0;padding-bottom:0;margin-bottom:28px;">
+    <h2>A Little <em>Note</em></h2>
+    <p>From me, to you</p>
+    <div class="ornament"><div class="line"></div><div class="dot"></div><div class="line"></div></div>
+  </div>
+
+  <div class="note-card">
+    <div class="note-eyebrow">✦ With Love ✦</div>
+    <h2>Hey, you.</h2>
+    <p>I made this little corner of the internet just for us. It holds so many memories from the past 10 months. Our dates, video calls, yes even the late night ones in which you always looked cutest. I made this website so you can open it whenever you miss me, anytime. These is a record of us, an archive of some of my favourite moments of you and I stuck in time. This is my gift to you Nakshatraa. I'm sorry I couldn't do more, this took so long and so much fixing and troubleshooting (PLEASE EXCUSE ANY SPELLING OR GRAMMAR MISTAKES HEHE). i love you my favourite person. i love you my nakshtraa nayak. finally, i'm sorry. i'm sorry for all that's happened. ANYWAYSYSYSYS NOT BEING MOODY, I LOVE YOUSUHSUHSUHSUNSHSBHSBHNSSYHS SO MUCHCHCHCHSHHSSHS. I love you before. I love you even more now. I'll love you tomorrow the day after and then... well you get the point. I love you forever and next my Nakshatraa, to infinity and beyond (and then some) 💛</p>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-mark">Our Adventures ✦</div>
+  <p>Made with love for our 10-monthasary  ·  💛  ·  You're my favourite person  ·  PS. PLS LET ME REPOST UR STORY (YES THE ONE THAT'S STILL UP RN)</p>
+</footer>
+
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <span class="lightbox-close" onclick="closeLightbox()">✕</span>
+  <span class="lightbox-prev" onclick="event.stopPropagation();lbNav(-1)">‹</span>
+  <img id="lightbox-img" src="" alt="Photo" onclick="event.stopPropagation()">
+  <span class="lightbox-next" onclick="event.stopPropagation();lbNav(1)">›</span>
+  <div class="lightbox-counter" id="lightbox-counter"></div>
+</div>
+
+<script>
+// ── TIME-BASED GREETING & PASSWORD LOGIC ──
+const SITE_PASSWORD = "08-07-2025"; // You can change this to any password you prefer!
+
+function setTimeGreeting() {
+  const hour = new Date().getHours();
+  let greeting = "Good Morning";
+  
+  if (hour >= 12 && hour < 17) {
+    greeting = "Good Afternoon";
+  } else if (hour >= 17 && hour < 21) {
+    greeting = "Good Evening";
+  } else if (hour >= 21 || hour < 5) {
+    greeting = "Good Night";
+  }
+  
+  document.getElementById('time-greeting').textContent = greeting + ", Beautiful";
+}
+
+function checkPassword() {
+  const input = document.getElementById('password-input').value;
+  const errorMsg = document.getElementById('lock-error-msg');
+  const lockScreen = document.getElementById('lock-screen');
+  
+  if (input === SITE_PASSWORD) {
+    lockScreen.style.opacity = '0';
+    lockScreen.style.visibility = 'hidden';
+    errorMsg.style.display = 'none';
+  } else {
+    errorMsg.style.display = 'block';
+    document.getElementById('password-input').value = '';
+  }
+}
+
+// Initialize greeting on load
+setTimeGreeting();
+
+// ── DATES GRID GENERATION DATA ──
+const dateData = [
+  { 
+    num: 1, 
+    accent: 'gold',    
+    tag: 'Date #1', 
+    title: 'Erin Mills Town Centre', 
+    date: 'August 18, 2025', 
+    memo: '"Boo!" 😝 Seeing you that day, I was just in awe Naku. My jaw dropped. You were prettier than every photo I saw of you before then. My heart skipped as soon as I recognized you, racing as I secretly followed you. Feeding you that day took some CRAZY guts. And I held not just your hands - THE ENTIRE TIME - but also your waist 😦. I was just as nervous as you were lovie. I still wear the bracelet to this day. Our first kiss 💞',
+    photos: ['Date1_1.jpg']
+  },
+  { 
+    num: 2, 
+    accent: 'emerald', 
+    tag: 'Date #2', 
+    title: 'Meadowvale Conservation Area', 
+    date: 'August 30, 2025', 
+    memo: 'The most peaceful day. From the walk, to the food (PIZZA!), sitting at the park and finally the tunnel. It was just us. You, me and the quite sound of the water flowing by the tunnel that day. The first time we made out. The first time you layed in my lap.',
+    photos: ['Date2_1.jpg', 'Date2_2.jpg', 'Date2_3.jpg', 'Date2_4.jpg', 'Date2_5.jpg']
+  },
+  { 
+    num: 3, 
+    accent: 'gold',    
+    tag: 'Date #3', 
+    title: 'Kariya Park, Square One', 
+    date: 'November 23, 2025', 
+    memo: 'Our first time ifykyk. What happened at Kariya was !!! You wore my jacket 💗. Forever grateful to that lady for taking our photos, our first photoshoot together. Btw... SORRY FOR SHOVING ICECREAM UP YOUR NOSE LMAO 😛😛',
+    photos: ['Date3_1.jpg', 'Date3_2.jpg', 'Date3_3.jpg', 'Date3_4.jpg', 'Date3_5.jpg', 'Date3_6.jpg', 'Date3_7.jpg', 'Date3_8.jpg', 'Date3_9.jpg'] // Reduced down to exactly 9 photos
+  },
+  { 
+    num: 4, 
+    accent: 'emerald', 
+    tag: 'Date #4', 
+    title: 'Walmart, Indigo (50 Quarry Edge Dr, Brampton)', 
+    date: 'January 27, 2026', 
+    memo: 'First time suprising the love of my life. I still keep those stars you stuck on my phone. Indigo was so nice Naku, it was the so cozy with you. Just sitting with each other and talking (chasing you down to take photos of you). You also wanted it during your period. Thanks for the compliment princess 💕',
+    photos: ['Date4_1.jpg', 'Date4_2.jpg', 'Date4_3.jpg'] // Reduced down to exactly 3 photos
+  },
+  { 
+    num: 5, 
+    accent: 'gold',    
+    tag: 'Date #5', 
+    title: 'Bramlea City Centre', 
+    date: 'February 1, 2026', 
+    memo: 'How about you fill in the description for this lovie',
+    photos: ['Date5_1.jpg', 'Date5_2.jpg', 'Date5_3.jpg']
+  },
+  { 
+    num: 6, 
+    accent: 'emerald', 
+    tag: 'Date #6', 
+    title: 'William Osler, Peel Memorial Centre', 
+    date: 'March 29, 2026', 
+    memo: 'We spent basically the entire day togetherr. Bro showed up at the wrong location at first 😭. Seeing you that day gave me so much butterflies Naku. You were gorgeous. (as always duh). Volunteering with you made it so much more fun, even just sitting and cutting paper. I could go on describe what else happened during the day but I\'m sure it\'s going through your mind as soon as you started reading this message so I\'ll leave that up to you lovie 😉 First time we felt comfortable enough to go that far.',
+    photos: ['Date6_1.jpg']
+  },
+  { 
+    num: 7, 
+    accent: 'gold',    
+    tag: 'Date #7', 
+    title: 'Bramlea City Centre', 
+    date: 'April 10, 2026', 
+    memo: 'First double date. Coming all the way to Bramlea with Dhruv, third wheeling with him just for the chance of seeing you for at least an hour was so worth it. I was still so nervous about how I looked that I went to the washroom as soon as we arrived just to fix myself a little. Turns out that was a good move cuz you were a literal goddess. Shopping with you was so much fun Naku, I really really did enjoy walking around holding you stuff!! Unfortunately we had to cut it short but BRO DAMN WAS THAT THRILLING. Avoiding my parents at first and then suddenly running into your brother (LIKE WHAT THAT\'S CRAZY). I\'m sorry we didn\'t get to hang out a little longer after that my love.',
+    photos: ['Date7_1.jpg']
+  },
+  { 
+    num: 8, 
+    accent: 'emerald', 
+    tag: 'Date #8', 
+    title: 'First date by the lake. Upcoming Adventure! (Lakefront Promenade Park)', 
+    date: 'Sunday May 24, 2026', 
+    memo: 'Counting down the days until our next date together hehehe 💛',
+    photos: ['Date8_1.jpg']
+  }
+];
+
+const grid = document.querySelector('.dates-grid');
+dateData.forEach(d => {
+  const accentVar = d.accent === 'gold' ? 'var(--gold)' : 'var(--emerald)';
+  const accentPale = d.accent === 'gold' ? 'var(--gold-pale)' : 'var(--emerald-pale)';
+  const cardEl = document.createElement('div');
+  cardEl.className = 'date-card';
+  cardEl.style.cssText = `--accent:${accentVar};--accent-pale:${accentPale}`;
+  
+  let thumbsMarkup = '';
+  if (d.photos.length > 1) {
+    d.photos.forEach((photoSrc, idx) => {
+      thumbsMarkup += `
+        <div class="thumb ${idx === 0 ? 'active' : ''}" onclick="switchMainPhoto(this, '${photoSrc}')">
+          <img src="${photoSrc}" alt="Thumbnail">
+        </div>`;
+    });
+  }
+
+  cardEl.innerHTML = `
+    <div class="card-gallery">
+      <div class="card-main-photo" style="background:${accentPale}" onclick="handleMainPhotoClick(this)">
+        <img src="${d.photos[0]}" alt="Cover image">
+        <div class="card-num" style="border-color:${accentVar};color:${accentVar}">${d.num}</div>
+        <div class="photo-count-badge">${d.photos.length} photo${d.photos.length > 1 ? 's' : ''}</div>
+      </div>
+      ${d.photos.length > 1 ? `<div class="card-thumbs">${thumbsMarkup}</div>` : ''}
+    </div>
+    <div class="card-body" style="border-top:3px solid ${accentVar}">
+      <span class="card-tag" style="color:${accentVar}">${d.tag}</span>
+      <div class="card-title">${d.title}</div>
+      <div class="card-date-text">${d.date}</div>
+      <div class="card-memo">${d.memo}</div>
+    </div>`;
+  grid.appendChild(cardEl);
+});
+
+function switchMainPhoto(thumbEl, nextSrc) {
+  const card = thumbEl.closest('.date-card');
+  card.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));
+  thumbEl.classList.add('active');
+  card.querySelector('.card-main-photo img').src = nextSrc;
+}
+
+function handleMainPhotoClick(mainPhotoZone) {
+  const card = mainPhotoZone.closest('.date-card');
+  const activeImg = mainPhotoZone.querySelector('img').src;
+  const thumbs = card.querySelectorAll('.thumb img');
+  const srcs = thumbs.length ? Array.from(thumbs).map(i => i.src) : [activeImg];
+  
+  openLightboxGallery(srcs, activeImg);
+}
+
+function openLightboxGallery(srcList, currentSrc) {
+  const lb = document.getElementById('lightbox');
+  const lbImg = document.getElementById('lightbox-img');
+  const list = srcList || [currentSrc];
+  let idx = list.indexOf(currentSrc);
+  if (idx < 0) idx = 0;
+
+  lbImg.src = list[idx];
+  lb.dataset.idx = idx;
+  lb.dataset.srcs = JSON.stringify(list);
+  lb.classList.add('open');
+  document.getElementById('lightbox-counter').textContent = list.length > 1 ? `${idx + 1} / ${list.length}` : '';
+}
+
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
+}
+
+function lbNav(dir) {
+  const lb = document.getElementById('lightbox');
+  const srcs = JSON.parse(lb.dataset.srcs || '[]');
+  if (srcs.length < 2) return;
+  let idx = (parseInt(lb.dataset.idx || 0) + dir + srcs.length) % srcs.length;
+  lb.dataset.idx = idx;
+  document.getElementById('lightbox-img').src = srcs[idx];
+  document.getElementById('lightbox-counter').textContent = `${idx + 1} / ${srcs.length}`;
+}
+
+document.addEventListener('keydown', e => {
+  const lb = document.getElementById('lightbox');
+  if (!lb.classList.contains('open')) return;
+  if (e.key === 'Escape') closeLightbox();
+  if (e.key === 'ArrowRight') lbNav(1);
+  if (e.key === 'ArrowLeft') lbNav(-1);
+});
+
+const approxStart = new Date();
+approxStart.setMonth(approxStart.getMonth() - 10);
+const days = Math.round((new Date() - approxStart) / (1000 * 60 * 60 * 24));
+document.getElementById('days-count').textContent = days;
+</script>
+</body>
+</html>
